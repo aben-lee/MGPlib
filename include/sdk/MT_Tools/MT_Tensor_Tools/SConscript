@@ -1,0 +1,29 @@
+Import('*')
+files = Split("""
+MTStationList.cpp
+MTStation.cpp
+MTTensor.cpp
+MagneticTF.cpp
+PTensorMTData.cpp
+PTensorMTStation.cpp
+""")
+
+if int(compilelib):
+	if buildnetcdf:
+		files.append('ReadWriteImpedances.cpp')
+
+	obj = env.Object(files)
+	Return('obj')
+else:
+	progfiles = env.Program('ptavg','ptavg.cpp')
+	progfiles.append(env.Program('zavg','zavg.cpp'))
+	progfiles.append(env.Program('shiftmt','shiftmt.cpp'))
+	progfiles.append(env.Program('keepcommon', 'keepcommon.cpp'))
+	progfiles.append(env.Program('plotmtt', 'plotmtt.cpp'))
+	progfiles.append(env.Program('addnoise', 'addnoise.cpp'))
+	progfiles.append(env.Program('goe2j', 'goe2j.cpp'))
+	progfiles.append(env.Program('freqinter', 'freqinter.cpp'))
+	env.Program('printrhostar', 'printrhostar.cpp')
+	env.Program('swapphase','swapphase.cpp')
+	env.Program('printmu', 'printmu.cpp')
+	Return('progfiles')

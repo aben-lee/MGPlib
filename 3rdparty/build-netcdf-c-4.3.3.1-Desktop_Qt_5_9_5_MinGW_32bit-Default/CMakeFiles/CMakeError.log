@@ -1,0 +1,17 @@
+Performing C SOURCE FILE Test CC_HAS_SHORTEN_64_32 failed with the following output:
+Change Dir: D:/ProjectQt/MGpLib/3rdparty/build-netcdf-c-4.3.3.1-Desktop_Qt_5_9_5_MinGW_32bit-Default/CMakeFiles/CMakeTmp
+
+Run Build Command:"C:/Qt/Qt5.9.5/Tools/mingw530_32/bin/mingw32-make.exe" "cmTC_c9af7/fast"
+C:/Qt/Qt5.9.5/Tools/mingw530_32/bin/mingw32-make.exe -f CMakeFiles\cmTC_c9af7.dir\build.make CMakeFiles/cmTC_c9af7.dir/build
+mingw32-make.exe[1]: Entering directory 'D:/ProjectQt/MGpLib/3rdparty/build-netcdf-c-4.3.3.1-Desktop_Qt_5_9_5_MinGW_32bit-Default/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c9af7.dir/src.c.obj
+C:\Qt\Qt5.9.5\Tools\mingw530_32\bin\gcc.exe   -DCC_HAS_SHORTEN_64_32   -Wshorten-64-to-32 -o CMakeFiles\cmTC_c9af7.dir\src.c.obj   -c D:\ProjectQt\MGpLib\3rdparty\build-netcdf-c-4.3.3.1-Desktop_Qt_5_9_5_MinGW_32bit-Default\CMakeFiles\CMakeTmp\src.c
+gcc.exe: error: unrecognized command line option '-Wshorten-64-to-32'
+CMakeFiles\cmTC_c9af7.dir\build.make:64: recipe for target 'CMakeFiles/cmTC_c9af7.dir/src.c.obj' failed
+mingw32-make.exe[1]: *** [CMakeFiles/cmTC_c9af7.dir/src.c.obj] Error 1
+mingw32-make.exe[1]: Leaving directory 'D:/ProjectQt/MGpLib/3rdparty/build-netcdf-c-4.3.3.1-Desktop_Qt_5_9_5_MinGW_32bit-Default/CMakeFiles/CMakeTmp'
+Makefile:125: recipe for target 'cmTC_c9af7/fast' failed
+mingw32-make.exe: *** [cmTC_c9af7/fast] Error 2
+
+Source file was:
+int main(void) { return 0; }

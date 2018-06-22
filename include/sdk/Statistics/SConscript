@@ -1,0 +1,10 @@
+Import('*')
+files = Split("""
+MTSampleGenerator.cpp
+""")
+
+libs = env.get('LIBS') 
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')

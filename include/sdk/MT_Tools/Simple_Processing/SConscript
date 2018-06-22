@@ -1,0 +1,17 @@
+Import('*')
+
+
+libs = env.get('LIBS')
+
+
+if int(compilelib):
+	files = []
+	obj = env.Object(files)
+	Return('obj')
+else:
+    progfiles = []
+    if buildnetcdf == True and buildgsl == True :
+		progfiles.append(env.Program('simple_processing','simple_processing.cpp'))
+    Return('progfiles')
+
+

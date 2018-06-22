@@ -1,0 +1,30 @@
+Import('*')
+files = Split("""
+C1DMTSynthData.cpp
+C1DAnisoMTSynthData.cpp
+CollapseModel.cpp
+""")
+
+
+anisoconf = Split("""
+MTAnisoGAConf.cpp
+MTAnisoGAConfLexer.cpp
+MTAnisoGAConfParser.cpp
+""")
+
+libs = env.get('LIBS')
+linkflags = env.get('LINKFLAGS')
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')	
+else:
+	#progfiles = env.Program('mtanisoga', anisoconf+['mtanisoga.cpp'])	
+	progfiles = (env.Program('cag','cag++.cpp'))
+	progfiles.append(env.Program('anisomt','anisomt.cpp'))
+	
+	env.Program('sumobjective','sumobjective.cpp')
+	env.Program('modelcorr','modelcorr.cpp')
+	env.Program('randaniso','randaniso.cpp')
+	if buildnetcdf == True:
+		env.Program('modeldensity','modeldensity.cpp')
+	Return('progfiles')

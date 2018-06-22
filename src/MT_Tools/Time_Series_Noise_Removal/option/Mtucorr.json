@@ -1,0 +1,10 @@
+{
+	 "masterfilename" : "D:\\Qt\\MGPLib\\bin\\1255",
+	 "shortfilename" : "D:\\Qt\\MGPLib\\bin\\1255",
+	 "corrthreshold" : 0.9,
+	 "diffthreshold" : 10000,
+	 "trailpoints" : 5,
+	 "decaypoints" : 20,
+	 "iterations" : 50,
+	 "minspikeavg" : 10
+}

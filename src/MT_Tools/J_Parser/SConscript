@@ -1,0 +1,11 @@
+Import('*')
+antlr_files = Split("""
+JParser.g
+""")
+if int(compilelib):
+    if (buildantlr):
+	   obj = env.Antlr(antlr_files)
+    else:
+	   obj = []
+    Return('obj')
+

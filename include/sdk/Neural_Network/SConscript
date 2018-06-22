@@ -1,0 +1,14 @@
+Import('*')
+files = Split("""
+BipolarActivationFunction.cpp
+GeneralActivationFunction.cpp
+GeneralLinearCombiner.cpp
+IdentityActivationFunction.cpp
+InputNeuron.cpp
+NeuralNetwork.cpp
+SigmoidalNeuron.cpp
+""")
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')

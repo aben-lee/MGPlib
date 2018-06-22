@@ -1,0 +1,1 @@
+D:\MyProject\MGPLib\MT_Tools\Time_Series_Tools\mtubandpass.cpp:-1: error: undefined reference to `gplib::BirrpAsciiFormat::BirrpAsciiFormat()'

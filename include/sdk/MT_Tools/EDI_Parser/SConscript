@@ -1,0 +1,12 @@
+Import('*')
+antlr_files = Split("""
+EdiParser2.g
+""")
+
+if int(compilelib):
+    if (buildantlr):
+	    obj = env.Antlr(antlr_files)
+    else:
+	    obj = []
+    Return('obj')
+

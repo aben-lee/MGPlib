@@ -1,0 +1,158 @@
+First, a word of warning.: THIS IS A BETA RELEASE. This doesn't mean so much that the codes 
+will permanently crash, I use them all the time and a lot of them already for a few years, 
+but mostly that there is hardly any documentation, if at all. I plan to include some tutorial 
+examples in a later release, but for now you have to read the help texts that appear at the 
+start of some programs, look at the source code, or ask me to figure out what is happening. 
+If you are prepared to put up with it, you're most welcome to use the codes and send me 
+feedback through the Sourceforge project sites at http://sourceforge.net/projects/gplib
+
+PREPARATION
+
+Make sure you have the following libraries installed and in the default search path for your 
+compiler. Under linux you might be able to install them as part of your distribution, 
+e.g. Ubuntu 10.04  or later provide most required and optional libraries:
+
+* Boost 1.55 or later from www.boost.org
+* FFTW3 from www.fftw.org
+
+
+In addition you need the following helper application
+
+* SCons 0.96 or later from www.scons.org
+
+
+The following libraries are optional. Ideally the build system should tell you that these 
+extensions are disabled if you don't have them, but build everything else.
+
+* Antlr 2.7 (NOT Version 3) from www.antlr.org
+
+This library is now optional. If you do not have it installed, the MT programs will not be
+able to handle .edi and .j files, but only the simpler .mtt and .pek formats. You will therefore
+probably want to have antlr installed.
+
+* readline
+
+This has no direct impact on functionality, but makes entering filenames a little less inconvenient.
+
+
+* The boost bindings for Lapack and Atlas from 
+      news.tiker.net/filebrowser/software/boost-bindings
+* lapack and atlas http://math-atlas.sourceforge.net/
+      
+Without these you will not be able to use principal component analysis or KHL.
+
+* xmgrace from  http://plasma-gate.weizmann.ac.il/Grace/
+
+A couple of selection programs use xmgrace for directly plotting within the program, these will not be build.
+
+* netcdf http://www.unidata.ucar.edu/software/netcdf/
+
+Similarly there are a couple of programs that write out netcdf files for plotting. The core functionality
+of the library is not affected by this.
+
+* levmar from http://www.ics.forth.gr/~lourakis/levmar/
+As an alternative to GA based inversion, there are a couple of programs that use a Levenberg-Marquart inversion
+method provided by this library. However, these programs are not as well maintained as the GA based
+approaches and might not have the same functionality.
+
+* GSL 1.9 or later from www.gnu.org/software/gsl
+
+GSL is needed for interpolating time series. Without it this function is not available.
+
+I have not written any forward codes for seismic data myself, but rely on existing codes. 
+For receiver function analysis the programs call "respktn" from C. Ammon available from
+http://eqseis.geosc.psu.edu/%7Ecammon/HTML/RftnDocs/rftn01.html
+I cannot make this part of the distribution, as it in turn requires sac from IRIS http://www.iris.edu/hq/
+and their license does not allow redistribution of the code.
+
+The surface wave synthetics are calculated with code from the Computer Programs in Seismology 
+available from http://www.eas.slu.edu/People/RBHerrmann/ComputerPrograms.html Both of these are 
+purely optional, everything will build fine without them, but they are required for some programs
+to run (e.g. 1dinvga).
+
+
+LOCATING LIBRARIES AND INCLUDES
+The file custom.py contains the names and locations for some libraries that might have to be changed 
+before compilation.
+
+commonlibs = ['boost_filesystem-mt', 'boost_date_time-mt']
+
+The name of the boost libraries depends on the compiler and the version that was used to build them. If the build cannot
+locate the filesystem and date_time libraries, you have to locate them on your system and enter the appropriate names here.
+If for some reason you require to link to any other libraries, they can be included here as well. For example, 
+depending on which version of boost you are using, you might need to link to boost_system or not.
+
+customincludes = ['/home/mm/src/include']
+
+If you have some non-default include directories, e.g. in your home directory, you this array to add them for compilation.
+
+customlibdirs = ['']
+
+This is the corresponding entry for libraries.
+
+customlinkflags =' '
+
+These compiler flags are passed to the compiler during creation of the object files. For example if you want to 
+build the GA's with openmp under GCC or you want special optimizations, you can add those flags here.
+ 
+customcompileflags = ''
+
+These flags are passed to the compiler during linking.
+
+If you want to activate the optional features you have to set the corresponding values in custom.py to True, otherwise
+they will not build even if the compiler finds the right libraries. To  make the build process easier, everything is
+set to False by default.
+
+ANTLR
+
+Depending on your distribution there might be different ways of invoking antlr to generate C++ code. 
+On many platforms the command is "java antlr.Tool" and this is the default. On Ubuntu, however,
+it is runantlr. You can change the command by editing the line
+
+antlrcommand = 'java antlr.Tool'
+
+in custom.py
+
+COMPILATION
+
+If all goes well, you simply have to type scons and the compilation 
+will start (it works for me :-) ). I have successfully compiled this library and the programs 
+with g++ 4.1/4.2/4.3/4.4, intel c++ 9/10/12 on linux. Intel 10.1.015 gives an internal compiler error though.
+There are some problems with the sun compilers on linux because they don't seem to like boost, 
+otherwise my codes should not pose any problems.
+clang version 3.0 (trunk 128812) also compiles the library and all programs.
+
+Under gcc 4.3 you might get an error message " CharScanner.hpp:565: error: 'strcasecmp' was not declared in this scope".
+In this case you have to add the line #include <cstring> at the beginning of CharScanner.hpp
+
+FINISH
+
+You will end up with a bunch of executables in the bin sub-directory and you can copy the 
+ones you need to your preferred directory. There will also be a libgplib.a in the lib 
+directory, that you can link your own programs against, the corresponding header files are in 
+the include directory. I have provided a Doxygen file, and there are some doxygen 
+descriptions in the code, so you can build the documentation by running doxygen.
+
+That's it, you should be ready to explore gplib++. As it is released under the GPL, you are 
+free to use and modify this release. If you use it in an academic context, I would kindly ask 
+you to cite
+
+Joint inversion of teleseismic receiver functions and magnetotelluric data using a genetic 
+algorithm: Are seismic velocities and electrical conductivities compatible?
+M. Moorkamp, A G. Jones and D. W. Eaton, Geophysical Research Letters, 34, L16311, 
+doi:10.1029/2007GL030519
+
+and 
+
+Moorkamp , M., A. G. Jones, and S. Fishwick (2010), Joint inversion of receiver functions, 
+surface wave dispersion, and magnetotelluric data, 
+J. Geophys. Res., 115, B04318, doi:10.1029/2009JB006369.
+
+for the genetic algorithm and inversion part, and
+
+M. Moorkamp, Joint inversion of MT and receiver-function data
+PhD-thesis, National University of Ireland, Galway, 2007
+
+for the rest. 
+
+Have fun

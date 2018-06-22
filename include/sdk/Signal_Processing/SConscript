@@ -1,0 +1,17 @@
+Import('*')
+files = Split("""
+AdaptiveFilter.cpp
+ApplyFilter.cpp
+IterDecon.cpp
+LMSCanceller.cpp
+LSSOFilter.cpp
+RLSCanceller.cpp
+AMRLSCanceller.cpp
+WienerFilter.cpp
+WienerInterpolator.cpp
+""")
+
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')

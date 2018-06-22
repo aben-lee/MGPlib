@@ -1,0 +1,56 @@
+Import('*')
+files = Split("""
+FkModel.cpp
+RecCalc.cpp
+ResPkModel.cpp
+SeismicDataComp.cpp
+SeismicModel.cpp
+SeismicStationList.cpp
+MultiRecCalc.cpp
+RFVelCalc.cpp
+SurfaceWaveData.cpp
+SurfaceWaveModel.cpp
+SurfaceWaveSynthetic.cpp
+SurfaceWaveObjective.cpp
+SWAnisoRoughness.cpp
+Sdisp96Model.cpp
+AnisoSurfaceWaveModel.cpp
+AnisoSurfaceWaveSynthetic.cpp
+AnisoSurfaceWaveObjective.cpp
+MultiAnisoSurfaceWaveObjective.cpp
+ParkSurfaceWaveData.cpp
+RecInvConf.cpp
+""")
+
+configfiles = Split("""
+CalcRecConf.cpp
+""")
+
+
+
+libs = env.get('LIBS')
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')
+else:
+	progfiles = env.Program('rfvel', ['rfvel.cpp']+configfiles)
+	if buildgrace:
+		progfiles.append(env.Program('chooserf', 'chooserecfunc.cpp'))
+	if buildnetcdf:
+		progfiles.append(env.Program('plotrecfunc','plotrecfunc.cpp'))
+		progfiles.append(env.Program('plotsourcerel','plotsourcerel.cpp'))
+	progfiles.append(env.Program('selectsites', 'selectsites.cpp'))
+
+	progfiles.append(env.Program('stackrf', 'stackrf.cpp'))
+	progfiles.append(env.Program('seisnoise', 'seisnoise.cpp'))
+	progfiles.append(env.Program('surfnoise', 'surfnoise.cpp'))
+	progfiles.append(env.Program('datarec', ['calcrec.cpp']+configfiles))
+	progfiles.append(env.Program('sac2asc','sac2asc.cpp'))
+	env.Program('corrselect', 'corrselect.cpp')	
+	env.Program('datarec_multi', ['datarec_multi.cpp']+configfiles)
+	Return('progfiles')
+
+
+
+

@@ -1,0 +1,41 @@
+Import('*')
+files = Split("""
+MtuFormat.cpp
+TimeSeries.cpp
+BirrpAsciiFormat.cpp
+TimeSeriesData.cpp
+CsvFormat.cpp
+LemiTsFormat.cpp
+""")
+
+if buildgsl == True:
+   files.append("MtuFilter.cpp")
+
+libs = env.get('LIBS') 
+
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')
+else:
+	progfiles = (env.Program('mtupspec','mtupspec.cpp'))
+	progfiles.append(env.Program('exchangecomp', 'exchangecomp.cpp'))
+	progfiles.append(env.Program('mtu2birrp','mtu2birrp.cpp'))
+	progfiles.append(env.Program('syncts','syncts.cpp'))
+	progfiles.append(env.Program('rotts','rotts.cpp'))
+	progfiles.append(env.Program('magmean','magmean.cpp'))
+	progfiles.append(env.Program('mtufdiff','mtufdiff.cpp'))
+	progfiles.append(env.Program('mtucut','mtucut.cpp'))
+	progfiles.append(env.Program('mtugood','mtugood.cpp'))
+	progfiles.append(env.Program('mtuparms','mtuparms.cpp'))
+	progfiles.append(env.Program('mtumerge','mtumerge.cpp'))
+	progfiles.append(env.Program('mtucross','mtucross.cpp'))
+	progfiles.append(env.Program('mtura','mtura.cpp'))
+	progfiles.append(env.Program('mtubandpass','mtubandpass.cpp'))
+	progfiles.append(env.Program('generatemtts','generatemtts.cpp'))
+	if buildnetcdf == True:
+		progfiles.append(env.Program('mtutf','mtutimefrequency.cpp'))
+	if buildlapack == True:
+		progfiles.append(env.Program('mtupca', 'mtupca.cpp'))
+	Return('progfiles')
+

@@ -1,0 +1,20 @@
+Import('*')
+files = []
+if buildnetcdf == True:
+	files = Split("""
+	ThreeDMTModel.cpp
+	""")
+
+	
+
+
+libs = env.get('LIBS') 
+
+
+if int(compilelib):
+	obj = env.Object(files)
+	Return('obj')
+else:
+	if buildnetcdf == True:
+		env.Program('writevtk', 'writevtk.cpp')
+	Return('')

@@ -1,0 +1,19 @@
+Import('*')
+
+
+
+anisofiles = Split("""
+anisogajoint.cpp
+AnisoJointConf.cpp
+""")
+
+libs = env.get('LIBS')
+linkflags = env.get('LINKFLAGS')
+
+
+if int(compilelib):
+	obj = []
+	Return('obj')
+else:
+	progfiles = env.Program('anisogajoint', anisofiles)
+	Return('progfiles')

@@ -1,0 +1,15 @@
+Import('*')
+
+
+if int(compilelib):
+	files = []
+	obj = env.Object(files)
+	Return('obj')
+else:
+	libs = env.get('LIBS')
+	progfiles = env.Program('ptensor', 'phasetensormap.cpp')
+	progfiles.append(env.Program('ptfreq', 'ptfreq.cpp'))
+	progfiles.append(env.Program('mtt2ptensor','mtt2ptensor.cpp'))
+	if buildgrace == True:
+		progfiles.append(env.Program('ptselect','ptselect.cpp'))
+	Return('progfiles')
